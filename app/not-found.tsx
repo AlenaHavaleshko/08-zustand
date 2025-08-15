@@ -1,9 +1,8 @@
-"use client";
 
 // Варіант 1 з перенаправленням - Вас буде перенаправлено на головну через кілька секунд…
 import type { Metadata } from "next";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+// import { useEffect } from "react";
+// import { useRouter } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "404 - Page Not Found | NoteHub",
@@ -23,14 +22,16 @@ export const metadata: Metadata = {
   },
 };
 
-const NotFound = () => {
-  const router = useRouter();
+ const NotFound = () => {
 
-  useEffect(() => {
-    // Редірект через 3 секунди
-    const timer = setTimeout(() => router.push("/"), 3000);
-    return () => clearTimeout(timer);
-  }, [router]);
+  //приклад редіректу через сеттаймаут
+//   const router = useRouter();
+
+//   useEffect(() => {
+//     // Редірект через 3 секунди
+//     const timer = setTimeout(() => router.push("/"), 3000);
+//     return () => clearTimeout(timer);
+//   }, [router]);
 
   return (
     <div>
