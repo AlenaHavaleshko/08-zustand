@@ -1,4 +1,4 @@
-import axios from 'axios';
+  import axios from 'axios';
 import type { Note, NewNoteData } from '@/types/note';
 
 export interface FetchNotesParams {
