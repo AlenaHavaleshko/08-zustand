@@ -11,9 +11,9 @@ import { ValidationError } from "yup";
 import { useRouter } from "next/navigation";
 import css from "./NoteForm.module.css";
 
-interface NoteFormProps {
-  onClose: () => void; // якщо все добре, хочемо функцию, яка закриваэ модалку
-}
+// interface NoteFormProps {
+//   onClose: () => void; // якщо все добре, хочемо функцию, яка закриваэ модалку
+// }
 
 const NoteSchema = Yup.object({
   title: Yup.string()
@@ -26,7 +26,7 @@ const NoteSchema = Yup.object({
     .required("Required field"),
 });
 
-export default function NoteForm({ onClose }: NoteFormProps) {
+export default function NoteForm() {
   const fieldId = useId();
   const queryClient = useQueryClient();
 
@@ -42,6 +42,8 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   });
 };
 
+  const router = useRouter();
+
   const { mutate, isPending } = useMutation({
     mutationFn: (noteData: NewNoteData) => createNote(noteData),
     onSuccess: () => {
@@ -49,7 +51,8 @@ export default function NoteForm({ onClose }: NoteFormProps) {
         queryKey: ["notes"],
       });
       clearDraft ();
-      onClose();
+      const tagToRedirect = draft.tag || "All";
+      router.push(`/notes/filter/${tagToRedirect}`);
     },
   });
 
@@ -79,10 +82,8 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     }
   };
 
-   const router = useRouter();
-
   const handleCancel = () => {
-    router.push("/notes/filter/All"); 
+    router.back(); 
   };
 
   return (
@@ -91,7 +92,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
         <div className={css.formGroup}>
           <label htmlFor={`${fieldId}-title`}>Title</label>
           <input
-            defaultValue = {draft?.title}  onChange = {handleChange}
+            value = {draft?.title || ""}  onChange = {handleChange}
             id={`${fieldId}-title`}
             type="text"
             name="title"
@@ -103,7 +104,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
         <div className={css.formGroup}>
           <label htmlFor={`${fieldId}-content`}>Content</label>
           <textarea
-            defaultValue = {draft?.content}  onChange = {handleChange}
+           value = {draft?.content || ""}   onChange = {handleChange}
             id={`${fieldId}-content`}
             name="content"
             rows={8}
@@ -116,7 +117,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
 
         <div className={css.formGroup}>
           <label htmlFor={`${fieldId}tag`}>Tag</label>
-          <select defaultValue = {draft?.tag}  onChange = {handleChange} id={`${fieldId}tag`} name="tag" className={css.select}>
+          <select value = {draft?.tag}  onChange = {handleChange} id={`${fieldId}tag`} name="tag" className={css.select}>
             {tags.map((tag) => (
               <option key={tag} value={tag}>
                 {tag}

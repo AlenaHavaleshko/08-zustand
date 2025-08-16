@@ -11,6 +11,7 @@ export interface FetchNotesParams {
 export interface FetchNotesResponse {
  totalPages: number;
  notes: Note[];
+ tag?: string;
 }
 
  axios.defaults.baseURL = 'https://notehub-public.goit.study/api';
@@ -20,9 +21,9 @@ export interface FetchNotesResponse {
  export async function fetchNotes({ page = 1, perPage = 12, search='', tag = undefined }: FetchNotesParams): Promise<FetchNotesResponse> {
 
   const response = await axios.get<FetchNotesResponse>(`/notes`, {
-    params: {  // генерируем параметры
-     page,    //  с документации 
-     perPage,//  с документации 
+    params: {  // генеруємо параметры
+     page,     //  с документации 
+     perPage,  //  с документации 
      ...(search?.trim() ? { search } : {}),
      tag
     },
@@ -32,7 +33,10 @@ export interface FetchNotesResponse {
   });
 
   
-  return response.data;
+  return {
+    ...response.data,
+    tag
+  }
 }
 
 export async function fetchNoteById (id: string): Promise<Note> {

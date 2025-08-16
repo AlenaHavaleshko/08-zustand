@@ -2,10 +2,6 @@ import Link from "next/link";
 import {tags} from "@/types/note"
 import css from "./SidebarNotes.module.css";
 
-// type SidebarNotesProps = {
-//   tags: string[];
-// };
-
 const NotesSidebar = async () => {
 
   return (

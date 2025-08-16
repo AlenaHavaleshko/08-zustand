@@ -24,7 +24,6 @@ export const useNoteDraftStore = create<NoteDraftStore>() (
 {
 // Ключ в localStorage
       name: 'note-draft' ,
-       // Сохраняем только свойство draft
       partialize: (state) => ({ draft: state.draft }),
     },
   ),

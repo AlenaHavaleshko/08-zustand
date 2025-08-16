@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from 'next/font/google';
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import { Toaster } from "react-hot-toast";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import "./globals.css";
 
@@ -44,6 +45,7 @@ export default function RootLayout({
           < Header />
           {children}
           {modal}
+          <Toaster position="top-right" />
           <Footer />
         </TanStackProvider>
       </body>
